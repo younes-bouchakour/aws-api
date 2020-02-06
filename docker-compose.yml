@@ -1,0 +1,36 @@
+version: '3.6'
+services:
+  php:
+    build:
+      context: ./
+      target: php
+    depends_on:
+      - db
+    networks:
+      - backend
+  nginx:
+    build:
+      context: ./
+      target: nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - php
+    networks:
+      - frontend
+      - backend
+  db:
+    image: 'postgres:12-alpine'
+    ports:
+      - '5432:5432'
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=blog_api
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
