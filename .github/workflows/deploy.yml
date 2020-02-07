@@ -21,7 +21,7 @@ jobs:
                 docker build . --file Dockerfile --tag php --target php
                 docker build . --file Dockerfile --tag nginx
             - name: Log into registry
-              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+              run: echo "${{ secrets.REGISTRY_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
             - name: push
               run: |
                 PHP_ID=docker.pkg.github.com/${{ github.repository }}/php
